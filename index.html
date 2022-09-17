@@ -30,9 +30,7 @@
     <div id="wrapper">
       <header>
         <div class="menu">
-         
-            <h2>Proyecto 2 Crear un crud</h2>
-         
+          <h2>Proyecto 2 Crear un crud</h2>
         </div>
       </header>
       <section class="explain">
@@ -60,12 +58,10 @@
       </section>
     </div>
     <footer>
-      
-        <h6>
-         * La información proporcionada cuenta con la protección de la LEY
-          FEDERAL DE PROTECCIÓN DE DATOS PERSONALES.
-        </h6>
-      
+      <h6>
+        * La información proporcionada cuenta con la protección de la LEY
+        FEDERAL DE PROTECCIÓN DE DATOS PERSONALES.
+      </h6>
     </footer>
 
     <script>
@@ -95,7 +91,7 @@
           newRow.appendChild(newOption);
 
           let newEditButton = document.createElement("button");
-          newEditButton.innerText = "Editar";
+          newEditButton.innerHTML = "<i class='fa fa-edit'></i> Editar";
           newEditButton.setAttribute(
             "onclick",
             "editItem(" +
@@ -111,7 +107,7 @@
           newOption.appendChild(newEditButton);
 
           let newDeleteButton = document.createElement("button");
-          newDeleteButton.innerText = "Borrar";
+          newDeleteButton.innerHTML = "<i class='fa fa-times'></i> Borrar";
           newDeleteButton.setAttribute("onclick", "deleteItem(" + e + ")");
           newDeleteButton.setAttribute("class", "btn btn-danger m-1");
           newOption.appendChild(newDeleteButton);
@@ -161,14 +157,17 @@
         newRow.appendChild(newOption);
 
         let newSaveButton = document.createElement("button");
-        newSaveButton.innerText = "Guardar";
+        newSaveButton.innerHTML = "<i class='fa fa-save'></i> Guardar";
         newSaveButton.setAttribute("onclick", "saveNewItem()");
         newSaveButton.setAttribute("class", "btn btn-success m-1");
+
+        
+        
 
         newOption.appendChild(newSaveButton);
 
         let newCancelButton = document.createElement("button");
-        newCancelButton.innerText = "Cancelar";
+        newCancelButton.innerHTML = "<i class='fa fa-ban'></i> Cancelar";
         newCancelButton.setAttribute("onclick", "cancelNewItem()");
         newCancelButton.setAttribute("class", "btn btn-warning m-1");
         newOption.appendChild(newCancelButton);
@@ -260,7 +259,7 @@
         opt.innerHTML =
           "<button class='btn btn-success m-1' onclick='updateItem(" +
           e +
-          ")'>Guardar</button><button class='btn btn-warning m-1' onclick='cancelNewItem()'>Cancelar</button>";
+          ")'><i class='fa fa-save'></i> Guardar</button><button class='btn btn-warning m-1' onclick='cancelNewItem()'><i class='fa fa-ban'></i> Cancelar</button>";
       }
 
       function disableAllButtons() {
