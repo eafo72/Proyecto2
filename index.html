@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <!-- jquery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    <!-- css styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Lista de Tecnologías</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <div class="menu">
+         
+            <h2>Proyecto 2 Crear un crud</h2>
+         
+        </div>
+      </header>
+      <section class="explain">
+        <h1>Lista de Tecnologías</h1>
+        <h4>
+          Hola, acontinuación genera una lista con las tecnologías que conoces y
+          tu nivel de dominio de las mismas.
+        </h4>
+        <button class="btn btn-success" id="addButton" onclick="addNewItem()">
+          <i class="fa fa-plus-circle"></i> Agregar
+        </button>
+      </section>
+
+      <section class="content">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tecnología</th>
+              <th>Nivel</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody id="itemsZone"></tbody>
+        </table>
+      </section>
+    </div>
+    <footer>
+      
+        <h6>
+         * La información proporcionada cuenta con la protección de la LEY
+          FEDERAL DE PROTECCIÓN DE DATOS PERSONALES.
+        </h6>
+      
+    </footer>
+
+    <script>
+      $(document).ready(function () {
+        let users = localStorage.getItem("users");
+        let usersArray = [];
+        if (users != null && users != undefined) {
+          usersArray = JSON.parse(users);
+        }
+        for (e in usersArray) {
+          let zone = document.getElementById("itemsZone");
+
+          let newRow = document.createElement("tr");
+
+          let newTitle = document.createElement("td");
+          newTitle.innerHTML = usersArray[e]["title"];
+          newTitle.setAttribute("id", "title" + e);
+          newRow.appendChild(newTitle);
+
+          let newLevel = document.createElement("td");
+          newLevel.innerHTML = usersArray[e]["level"];
+          newLevel.setAttribute("id", "level" + e);
+          newRow.appendChild(newLevel);
+
+          let newOption = document.createElement("td");
+          newOption.setAttribute("id", "opt" + e);
+          newRow.appendChild(newOption);
+
+          let newEditButton = document.createElement("button");
+          newEditButton.innerText = "Editar";
+          newEditButton.setAttribute(
+            "onclick",
+            "editItem(" +
+              e +
+              ",'" +
+              usersArray[e]["title"] +
+              "','" +
+              usersArray[e]["level"] +
+              "')"
+          );
+          newEditButton.setAttribute("class", "btn btn-info m-1");
+
+          newOption.appendChild(newEditButton);
+
+          let newDeleteButton = document.createElement("button");
+          newDeleteButton.innerText = "Borrar";
+          newDeleteButton.setAttribute("onclick", "deleteItem(" + e + ")");
+          newDeleteButton.setAttribute("class", "btn btn-danger m-1");
+          newOption.appendChild(newDeleteButton);
+
+          zone.appendChild(newRow);
+        }
+      });
+
+      function addNewItem() {
+        disableAllButtons();
+
+        let zone = document.getElementById("itemsZone");
+
+        let newRow = document.createElement("tr");
+
+        let newTitle = document.createElement("td");
+        let newTitleInput = document.createElement("input");
+        newTitleInput.setAttribute("id", "newTitleInput");
+
+        newTitle.appendChild(newTitleInput);
+        newRow.appendChild(newTitle);
+
+        let newLevel = document.createElement("td");
+        let newLevelSelect = document.createElement("select");
+        newLevelSelect.setAttribute("required", "true");
+        newLevelSelect.setAttribute("id", "newLevelSelect");
+
+        let newSelectEmptyOption = document.createElement("option");
+        newSelectEmptyOption.innerText = "Selecciona el nivel";
+        newSelectEmptyOption.setAttribute("value", "");
+        newSelectEmptyOption.setAttribute("hidden", true);
+
+        newLevelSelect.appendChild(newSelectEmptyOption);
+
+        let newSelectJuniorOption = document.createElement("option");
+        newSelectJuniorOption.innerText = "Junior";
+        newLevelSelect.appendChild(newSelectJuniorOption);
+
+        let newSelectSeniorOption = document.createElement("option");
+        newSelectSeniorOption.innerText = "Senior";
+        newLevelSelect.appendChild(newSelectSeniorOption);
+
+        newLevel.appendChild(newLevelSelect);
+        newRow.appendChild(newLevel);
+
+        let newOption = document.createElement("td");
+        newRow.appendChild(newOption);
+
+        let newSaveButton = document.createElement("button");
+        newSaveButton.innerText = "Guardar";
+        newSaveButton.setAttribute("onclick", "saveNewItem()");
+        newSaveButton.setAttribute("class", "btn btn-success m-1");
+
+        newOption.appendChild(newSaveButton);
+
+        let newCancelButton = document.createElement("button");
+        newCancelButton.innerText = "Cancelar";
+        newCancelButton.setAttribute("onclick", "cancelNewItem()");
+        newCancelButton.setAttribute("class", "btn btn-warning m-1");
+        newOption.appendChild(newCancelButton);
+
+        zone.appendChild(newRow);
+
+        newTitleInput.focus();
+      }
+
+      function saveNewItem() {
+        let title = document.getElementById("newTitleInput").value;
+        let level = document.getElementById("newLevelSelect").value;
+
+        if (title == "") {
+          alert("Antes de guardar, ingresa el nombre de la tecnología.");
+          newTitleInput.focus();
+        } else if (level == "") {
+          alert("Antes de guardar, selecciona tu nivel de conocimiento.");
+        } else {
+          let users = localStorage.getItem("users");
+          let usersArray = [];
+          if (users != null && users != undefined) {
+            usersArray = JSON.parse(users);
+          }
+          let newObject = { title: title, level: level };
+          usersArray.push(newObject);
+          localStorage.setItem("users", JSON.stringify(usersArray));
+
+          window.location.reload(false);
+        }
+      }
+
+      function updateItem(e) {
+        let title = document.getElementById("newTitleInput").value;
+        let level = document.getElementById("newLevelSelect").value;
+
+        if (title == "") {
+          alert("Antes de guardar, ingresa el nombre de la tecnología.");
+          newTitleInput.focus();
+        } else if (level == "") {
+          alert("Antes de guardar, selecciona tu nivel de conocimiento.");
+        } else {
+          let users = localStorage.getItem("users");
+          let usersArray = [];
+          if (users != null && users != undefined) {
+            usersArray = JSON.parse(users);
+          }
+          let newObject = { title: title, level: level };
+
+          usersArray[e] = newObject;
+          localStorage.setItem("users", JSON.stringify(usersArray));
+
+          window.location.reload(false);
+        }
+      }
+
+      function cancelNewItem() {
+        window.location.reload(false);
+      }
+
+      function deleteItem(e) {
+        let users = localStorage.getItem("users");
+        usersArray = JSON.parse(users);
+        usersArray.splice(e, 1);
+        localStorage.setItem("users", JSON.stringify(usersArray));
+        window.location.reload(false);
+      }
+
+      function editItem(e, titletext, levelselected) {
+        let title = document.getElementById("title" + e);
+        let level = document.getElementById("level" + e);
+        let opt = document.getElementById("opt" + e);
+
+        disableAllButtons();
+
+        title.innerHTML =
+          "<input id='newTitleInput' value='" + titletext + "'></input>";
+        let newTitleInput = document.getElementById("newTitleInput");
+        newTitleInput.focus();
+
+        if (levelselected == "Junior") {
+          level.innerHTML =
+            "<select id='newLevelSelect'><option selected>Junior</option><option>Senior</option></select>";
+        } else {
+          level.innerHTML =
+            "<select id='newLevelSelect'><option>Junior</option><option selected>Senior</option></select>";
+        }
+
+        opt.innerHTML =
+          "<button class='btn btn-success m-1' onclick='updateItem(" +
+          e +
+          ")'>Guardar</button><button class='btn btn-warning m-1' onclick='cancelNewItem()'>Cancelar</button>";
+      }
+
+      function disableAllButtons() {
+        let combo_botones = document.getElementsByClassName("btn");
+        for (let i = 0; i < combo_botones.length; i++) {
+          combo_botones[i].setAttribute("disabled", true);
+        }
+      }
+    </script>
+  </body>
+</html>

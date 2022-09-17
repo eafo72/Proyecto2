@@ -1,0 +1,52 @@
+html, body {
+    height: 100%;
+}
+
+#wrapper {
+    min-height: 90%;
+}    
+.menu{
+    background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgba(32, 32, 32, 0.87) 90%);
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.explain {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-left:20vw;
+    margin-right:20vw;
+}
+.explain #addButton{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.content {
+    margin-left:10vw;
+    margin-right:10vw;
+}
+.content table{
+    text-align: center;
+    
+}    
+
+.content table td {
+    vertical-align: middle !important;
+}
+
+footer{
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 10%;
+    background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgba(32, 32, 32, 0.87) 90%);
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 30px;
+}
