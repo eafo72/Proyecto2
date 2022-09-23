@@ -31,6 +31,7 @@ html, body {
 }
 .content table{
     text-align: center;
+    border:1px solid #c2c2c2;
     
 }    
 
