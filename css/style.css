@@ -38,6 +38,9 @@ html, body {
 .content table td {
     vertical-align: middle !important;
 }
+.content table thead {
+    background-color: #c2c2c2;
+}    
 
 footer{
     width: 100%;
